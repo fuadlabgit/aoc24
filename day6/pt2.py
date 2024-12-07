@@ -1,3 +1,4 @@
+import sys 
 from itertools import cycle
 import numpy as np 
 
@@ -48,12 +49,15 @@ start_dir = tuple(d)
 #     print(s)
 
 # pt2
+# NOTE 
+
 s = 0
+k = 0
 for x in range(ni):
     for y in range(nj):
-        
-        progress = int(100*(x + y*ni)/(ni * nj))
-        print("progress:", progress)
+        progress = int(100*k/(ni * nj))
+        k += 1 
+        sys.stdout.write(f"progress: {progress}%\r")
 
         if (x,y) == start_pos:
             continue 
