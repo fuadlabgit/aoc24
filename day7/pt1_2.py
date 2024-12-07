@@ -23,8 +23,8 @@ for line in input.split("\n"):
     v = int(v)
     x = list(map(int, x.split()))
     combis = list(product(ops, repeat=len(x)-1))
-    print(v, x)
-
+    print(v, x) # print progess (optional)
+    
     for combi in combis:
         result = x[0]
         for j, xj in enumerate(x[1:]):
