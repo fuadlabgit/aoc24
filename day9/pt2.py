@@ -49,4 +49,3 @@ for j, block_j in enumerate(block):
     if block_j != ".":
         s += j * int(block_j)
 print(s)
-
