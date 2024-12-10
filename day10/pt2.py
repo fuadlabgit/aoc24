@@ -43,5 +43,4 @@ for start in starts:
     new_trails = find_path(m, start)
     # print(len(new_trails), "new trails")
     score += len(new_trails)
- 
 print(score)
