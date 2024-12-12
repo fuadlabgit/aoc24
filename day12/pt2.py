@@ -4,18 +4,15 @@ EEEEE
 EXXXX
 EEEEE"""
 
-input = open("input.txt", "r").read()
+# input = open("input.txt", "r").read()
 
 import numpy as np 
 
 ptypes = set(list(input))
 ptypes.remove("\n")
-# print(ptypes)
 
 m = np.array([list(i) for i in input.split("\n")])
-# print(m)
-
-ni, nj = m.shape 
+ni, nj = m.shape
 
 def in_bounds(x):
     return  0 <= x[0] < ni and 0 <= x[1] < nj
@@ -23,6 +20,7 @@ def in_bounds(x):
 def explore(m, p, area, corners):
     if len(area) == 0: area.add(p)
 
+    # part 1: explore neighbors for area scanning
     for k, q in enumerate([(p[0]+1, p[1]), (p[0]-1, p[1]), (p[0], p[1]+1), (p[0], p[1]-1)]):
         if in_bounds(q):
             if m[q[0], q[1]] == m[p[0], p[1]]:
