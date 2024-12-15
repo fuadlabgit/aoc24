@@ -17,7 +17,7 @@ def transform(x):
 class Stone:
     # define stones and how they are processed
     memory = {}
-
+    
     def __init__(self,x0):
         self.history = [x0]
         self.x = x0
