@@ -20,10 +20,6 @@ input = open("input.txt", "r").read()
 # ------- Input parsing 
 
 import numpy as np 
-import sys 
-REC_DEPTH = 800
-sys.setrecursionlimit(REC_DEPTH)
-
 m = np.array([list(l) for l in input.split("\n")])
 
 def print_map(x, s=None, e=None, path=None):
