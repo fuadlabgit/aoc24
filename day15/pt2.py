@@ -73,7 +73,7 @@ def try_move(m, p, dr, movelist=None):
     elif m[p2[0], p2[1]] == "#":
         movelist.append("#") # place blocker in movelist -> cannot move
         return movelist 
-    elif m[p2[0], p2[1]] in ["[","]"]:
+    elif m[p2[0], p2[1]] in ["[","]"]: # < different in part 2
         if dr in ["<", ">"]:
             movelist.append(p)
             try_move(m, p2, dr, movelist)
@@ -90,12 +90,11 @@ def move_bot(b):
     movelist = try_move(m, b, step)
     if not "#" in movelist:
         vals = [m[q[0], q[1]] for q in movelist]
-        for i, q in enumerate(movelist):
+        for i, q in enumerate(movelist): # remove old positions 
             m[q[0], q[1]] = "."
-        for i, q in enumerate(movelist):
+        for i, q in enumerate(movelist): # insert shifted positions
             m[q[0]+dmap[step][0], q[1]+dmap[step][1]] = vals[i]
-        if len(movelist) > 0:
-            b = (b[0]+dmap[step][0], b[1]+dmap[step][1])
+        if len(movelist) > 0: b = (b[0]+dmap[step][0], b[1]+dmap[step][1]) # move bot position
     m[m=="@"] = "."
     return b
 
