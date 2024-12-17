@@ -88,9 +88,6 @@ output = []
 while len(output) < len(prog):
     output = run_prog(A_offset)
     A_offset += 1
-    
-n = 0
-nxt_digit = prog[len(prog)-2-n]
 
 # try to find the last digits
 def find_prog(cutoff, A_offset):
