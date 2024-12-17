@@ -84,12 +84,11 @@ def run_prog(A_val): # runs the program
 
 # find starting position
 A_offset = 8**(len(prog)-1) - 10
-while True:
+output = []
+while len(output) < len(prog):
     output = run_prog(A_offset)
     A_offset += 1
-    if len(output) == len(prog):
-        break 
-
+    
 n = 0
 nxt_digit = prog[len(prog)-2-n]
 
