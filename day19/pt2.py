@@ -23,13 +23,13 @@ designs = input.split("\n\n")[1].split("\n")
 seen = {} 
 
 def dfs(d, x="", options=0):
-    if d in seen: return seen[d]
+    if d in seen: return seen[d] # < important!
     if len(x) == len(d) and x == d:
         return 1     
     next_char = d[len(x)]
     if next_char in patterns:
         for p in patterns[next_char]:
-            if len(x) + len(p) <= len(d) and x + p in d:
+            if len(x) + len(p) <= len(d) and x + p == d[:len(x+p)]:
                 options += dfs(d, x + p)
     seen[d] = options 
     return options 
