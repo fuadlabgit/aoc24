@@ -12,7 +12,7 @@ bbrgwb"""
 
 input = open("input.txt", "r").read()
 
-# process inputs 
+# process inputs
 patterns = {"r":[], "b":[], "w":[], "g":[], "u":[]}
 for p in input.split("\n\n")[0].split(", "):
     if p[0] not in patterns: patterns[p[0]] = []
@@ -20,23 +20,23 @@ for p in input.split("\n\n")[0].split(", "):
 designs = input.split("\n\n")[1].split("\n")
 
 # part 2 requires a cache for already seen patterns...
-seen = {} 
+finished = {}
 
-def dfs(d, x="", options=0):
-    if d in seen: return seen[d] # < important!
+def dfs(d, x="", ):
+    if (d,x) in finished: return finished[(d,x)] # < important!
     if len(x) == len(d) and x == d:
-        return 1     
+        return 1
     next_char = d[len(x)]
-    if next_char in patterns:
-        for p in patterns[next_char]:
-            if len(x) + len(p) <= len(d) and x + p == d[:len(x+p)]:
-                options += dfs(d, x + p)
-    seen[d] = options 
-    return options 
+    options = 0
+    for p in patterns[next_char]:
+        if len(x) + len(p) <= len(d) and x + p == d[:len(x+p)]:
+            options += dfs(d, x + p)
+    finished[(d,x)] = options # processing ends. remember this status for next time
+    return options
 
 s = 0
 for d in designs:
-    n_options = dfs(d)
-    s += n_options
-    # print(d, n_options)
+    s += dfs(d)
 print(s)
+
+# 642535800868438
