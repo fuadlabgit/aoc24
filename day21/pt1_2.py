@@ -39,13 +39,10 @@ pads = [  {(0,0):"7", (1,0):"8", (2,0):"9",
           ]
 
 def find(start, target, t=0):
-    # move arm t to the target position, given the positions of all robot arms ('pos')
-    # return possible sequences to reach this
-    # start is a position vector indicating (x1, y1, x2, y2, x3, y3)
+    # find combinations to move to target from start 
     found = set()
-    q = deque([(start[:], "")]) # open list, start at given position
-    pos = start
-    best_score = float("inf") # find only shortest paths
+    q = deque([(start[:], "")]) 
+    best_score = float("inf")
     while q:
         pos, sequence = q.popleft() # popleft 
 
@@ -62,7 +59,7 @@ def find(start, target, t=0):
             if not nxt in pads[t]: continue
             q.append((nxt, nxt_seq))
     
-    return found # , pos
+    return found
 
 # store move options of every keypad
 global options
@@ -73,7 +70,7 @@ for t in range(2):
         for coord2 in pads[t].keys():
             target = pads[t][coord2]
             if coord == coord2: 
-                options[t][(src, target)] = ['A'] # , coord
+                options[t][(src, target)] = ['A']
             else:
                 options[t][(src, target)] = find(coord, target, t)
 
@@ -83,25 +80,33 @@ def lookup(string, keypad_id):
     combis = [seqs[(x, y)] for x, y in zip("A" + string, string)] # zip (A029A, 029A) = (A, 0), (0, 2), (2, 9), (9, A)
     return ["".join(x) for x in product(*combis)] # product computes all possible combinations of the sequences to reach (A->0, 0->2 etc)
 
-sol = 0
+cache = {}
+def explore(seq, max_id, robot_id=0):
+    if (seq,robot_id) in cache: return cache[(seq, robot_id)]
+    if robot_id == max_id: return len(seq) # < for part 2, set robo
+    length = sum([min(explore(subseq, max_id, robot_id+1) for subseq in options[1][(x, y)]) for x, y in zip("A" + seq, seq)])
+    cache[(seq, robot_id)] = length
+    return length
 
-for s in input.splitlines():
-    # numpad
-    next = lookup(s, 0) 
+input = """279A
+286A
+508A
+463A
+246A"""
 
-    # keypad 1 
-    possible_next = []
-    for seq in next:
-        possible_next += lookup(seq, 1)
-    next = possible_next
+# part 1
+total = 0
+for line in input.splitlines():
+    inputs = lookup(line, 0)
+    n = min([explore(s, max_id=2) for s in inputs]) 
+    total += n * int(line[:-1])
+print("part1:", total)
 
-    # keypad 2
-    possible_next = []
-    for seq in next:
-        possible_next += lookup(seq, 1)
-    next = possible_next 
-    
-    print(len(next[0]), "*", int(s[:-1]))
-    sol += len(next[0])* int(s[:-1])
-
-print(sol)
+# part 2
+cache = {}
+total = 0
+for line in input.splitlines():
+    inputs = lookup(line, 0)
+    n = min([explore(s, max_id=25) for s in inputs]) 
+    total += n * int(line[:-1])
+print("part2:", total)

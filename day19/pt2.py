@@ -31,7 +31,7 @@ def dfs(d, x="", ):
     for p in patterns[next_char]:
         if len(x) + len(p) <= len(d) and x + p == d[:len(x+p)]:
             options += dfs(d, x + p)
-    finished[(d,x)] = options # processing ends. remember this status for next time
+    finished[(d,x)] = options # processing ends. remember this status for next time 
     return options
 
 s = 0
