@@ -32,15 +32,14 @@ for i in range(M):
         price.append(int(str(n)[-1]))
         chg.append(int(str(n)[-1])-int(str(last)[-1]))
     
-    breaks = set()
+    breaks = set() # brakepoints: once traded, we cannot trade again
     for j in range(3, N):
         seq = tuple(chg[j-3:j+1])
-        if seq in breaks: # once traded, we cannot trade again
-            continue 
+        if seq in breaks: continue 
         breaks.add(seq)
         if seq not in scores:
             scores[seq] = []
         scores[seq].append(price[j])
-    
+
 # print(scores[(-2,1,-1,3)])
 print("\n", max([sum(v) for v in scores.values()])) # determine max. score 
